@@ -1,6 +1,4 @@
-# ============================================================
 # BAYER LEVERKUSEN - PROFESSIONAL EXCEL REPORT
-# ============================================================
 
 import pandas as pd
 from openpyxl import Workbook
@@ -17,9 +15,7 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 import os
 
 
-# ------------------------------------------------------------
 # FILE PATHS
-# ------------------------------------------------------------
 
 PLAYER_FILE = "data/player_metrics.csv"
 DEPENDENCY_FILE = "data/squad_dependency.csv"
@@ -27,9 +23,7 @@ DEPENDENCY_FILE = "data/squad_dependency.csv"
 OUTPUT_FILE = "Bayer_Leverkusen_Squad_Risk_Analysis.xlsx"
 
 
-# ------------------------------------------------------------
-# LEVERKUSEN STYLE
-# ------------------------------------------------------------
+# STYLE
 
 RED = "E32221"
 DARK_RED = "B71918"
@@ -45,9 +39,7 @@ thin_gray = Side(
 )
 
 
-# ------------------------------------------------------------
 # LOAD DATA
-# ------------------------------------------------------------
 
 print("\nLoading analysis data...")
 
@@ -58,9 +50,7 @@ print("Player metrics loaded:", len(players))
 print("Squad dependency loaded:", len(dependency))
 
 
-# ------------------------------------------------------------
 # CLEAN PLAYER NAMES
-# ------------------------------------------------------------
 
 name_map = {
     "Alejandro Grimaldo García": "Alejandro Grimaldo",
@@ -77,9 +67,7 @@ players["player"] = players["player"].replace(name_map)
 dependency["player"] = dependency["player"].replace(name_map)
 
 
-# ------------------------------------------------------------
 # CREATE WORKBOOK
-# ------------------------------------------------------------
 
 wb = Workbook()
 
@@ -88,9 +76,7 @@ default_sheet = wb.active
 wb.remove(default_sheet)
 
 
-# ============================================================
 # HELPER FUNCTIONS
-# ============================================================
 
 def add_title(ws, title, subtitle):
 
@@ -259,9 +245,7 @@ def add_dataframe(
     ws.add_table(table)
 
 
-# ============================================================
 # SHEET 1 - EXECUTIVE SUMMARY
-# ============================================================
 
 ws = wb.create_sheet(
     "Executive Summary"
@@ -276,7 +260,6 @@ add_title(
 )
 
 
-# Business problem
 
 ws.merge_cells("A4:J4")
 
@@ -485,9 +468,7 @@ for col in range(1, 11):
     ].width = 14
 
 
-# ============================================================
 # SHEET 2 - PLAYER METRICS
-# ============================================================
 
 ws = wb.create_sheet(
     "Player Metrics"
@@ -560,9 +541,7 @@ for row in range(
     ).number_format = "0.00"
 
 
-# ============================================================
 # SHEET 3 - SQUAD DEPENDENCY
-# ============================================================
 
 ws = wb.create_sheet(
     "Squad Dependency"
@@ -614,8 +593,7 @@ ws.freeze_panes = "A5"
 auto_width(ws)
 
 
-# Dependency values are already percentage points,
-# so display the % symbol without multiplying by 100.
+
 
 for row in range(
     5,
@@ -653,9 +631,7 @@ ws["B5"].font = Font(
 )
 
 
-# ============================================================
 # SHEET 4 - RECRUITMENT PROFILE
-# ============================================================
 
 ws = wb.create_sheet(
     "Recruitment Profile"
@@ -794,9 +770,7 @@ for col in range(1, 15):
     ].width = 12
 
 
-# ============================================================
 # SHEET 6 - METHODOLOGY
-# ============================================================
 
 ws = wb.create_sheet(
     "Methodology"
@@ -915,9 +889,7 @@ ws.column_dimensions["A"].width = 28
 ws.column_dimensions["B"].width = 90
 
 
-# ============================================================
 # WORKBOOK PROPERTIES
-# ============================================================
 
 wb.properties.title = (
     "Bayer Leverkusen Squad Risk & Recruitment Analysis"
@@ -940,9 +912,7 @@ wb.properties.description = (
 wb.active = 0
 
 
-# ============================================================
 # SAVE WORKBOOK
-# ============================================================
 
 wb.save(
     OUTPUT_FILE
