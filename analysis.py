@@ -1,9 +1,7 @@
-# ============================================================
 # BAYER LEVERKUSEN SQUAD RISK & RECRUITMENT ANALYSIS
 # 2023/24 Bundesliga
 #
-# Python | Pandas | StatsBomb Open Data | Matplotlib
-# ============================================================
+# Python, Pandas, StatsBomb Open Data, Matplotlib
 
 from statsbombpy import sb
 import pandas as pd
@@ -13,9 +11,7 @@ import ast
 import os
 
 
-# ============================================================
 # PROJECT SETTINGS
-# ============================================================
 
 TEAM = "Bayer Leverkusen"
 
@@ -28,9 +24,9 @@ os.makedirs("data", exist_ok=True)
 os.makedirs("images", exist_ok=True)
 
 
-# ============================================================
+ 
 # LEVERKUSEN VISUAL STYLE
-# ============================================================
+
 
 LEVERKUSEN_RED = "#E32221"
 LEVERKUSEN_DARK_RED = "#B71918"
@@ -51,9 +47,7 @@ plt.rcParams.update({
 })
 
 
-# ============================================================
 # HELPER FUNCTIONS
-# ============================================================
 
 def shorten_name(name):
 
@@ -105,11 +99,8 @@ def clean_chart(ax):
     )
 
 
-# ============================================================
 # STEP 1: LOAD MATCHES
-# ============================================================
 
-print("\nLoading Bayer Leverkusen matches...")
 
 matches = sb.matches(
     competition_id=COMPETITION_ID,
@@ -132,9 +123,7 @@ print(
 print("\nTotal matches:", len(matches))
 
 
-# ============================================================
 # STEP 2: LOAD EVENT DATA
-# ============================================================
 
 if os.path.exists(DATA_FILE):
 
@@ -177,9 +166,7 @@ print("\nTotal events:", len(events))
 print("Total columns:", len(events.columns))
 
 
-# ============================================================
 # STEP 3: ISOLATE BAYER LEVERKUSEN EVENTS
-# ============================================================
 
 lev_events = events[
     events["team"] == TEAM
@@ -210,9 +197,7 @@ print("\nPlayers:")
 print(players)
 
 
-# ============================================================
 # STEP 4: BUILD PLAYER METRICS
-# ============================================================
 
 player_names = (
     lev_events["player"]
@@ -310,9 +295,7 @@ shot_assists = (
 )
 
 
-# ============================================================
 # FINAL-THIRD PASSES
-# ============================================================
 
 final_third_passes_df = (
     lev_events[
@@ -338,9 +321,7 @@ final_third_passes = (
 )
 
 
-# ============================================================
 # FINAL-THIRD CARRIES
-# ============================================================
 
 final_third_carries_df = (
     lev_events[
@@ -366,9 +347,7 @@ final_third_carries = (
 )
 
 
-# ============================================================
 # MERGE PLAYER METRICS
-# ============================================================
 
 metrics = [
     passes,
@@ -430,9 +409,7 @@ print(
 )
 
 
-# ============================================================
 # STEP 5: CALCULATE PLAYER DEPENDENCY
-# ============================================================
 
 dependency_metrics = [
     "passes",
@@ -523,9 +500,7 @@ print(
 )
 
 
-# ============================================================
 # CHART 1: ATTACKING DEPENDENCY
-# ============================================================
 
 attack_chart = (
     main_squad
@@ -647,9 +622,7 @@ print(
 )
 
 
-# ============================================================
 # CHART 2: FINAL-THIRD PROGRESSION
-# ============================================================
 
 main_squad["final_third_actions"] = (
     main_squad["final_third_passes"] +
@@ -779,9 +752,7 @@ print(
 )
 
 
-# ============================================================
 # CHART 3: SQUAD RISK MATRIX
-# ============================================================
 
 risk_chart = main_squad.copy()
 
@@ -1017,9 +988,7 @@ print(
 )
 
 
-# ============================================================
 # CHART 4: RECRUITMENT PRIORITY PROFILE
-# ============================================================
 
 priority_player = main_squad.loc[
     main_squad[
@@ -1175,9 +1144,7 @@ print(
 )
 
 
-# ============================================================
 # FINAL SUMMARY
-# ============================================================
 
 print("\n" + "=" * 60)
 
